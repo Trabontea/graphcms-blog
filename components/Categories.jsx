@@ -8,10 +8,9 @@ const Categories = () => {
   useEffect(() => {
     getCategories()
       .then((newCategories)=> setCategories(newCategories))
-
   }, []);
 
-  console.log('categories', categories);
+  console.log('categories::', categories);
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
