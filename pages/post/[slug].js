@@ -1,8 +1,14 @@
 import React from 'react'
+import { useRouter } from 'next/router';
 import { getPosts, getPostDetails } from '../../services';
-import {PostDetail, Categories, PostWidget, Author, Comments, CommentsForm } from '../../components'
+import {PostDetail, Categories, PostWidget, Author, Comments, CommentsForm, Loader } from '../../components'
 
 const PostDetails = ({post}) => {
+  const router = useRouter();
+
+  if(router.isFallback) {
+    return <Loader />
+  }
 
   console.log('post', post)
   return (
@@ -16,12 +22,13 @@ const PostDetails = ({post}) => {
           <Comments slug={post.slug}/>
         </main>
 
-        <sidebar className="col-span-1 lg:col-span-4">
+        <div className="col-span-1 lg:col-span-4">
+        
           <div className="relative lg:sticky top-8">
             <PostWidget />
             <Categories />
-          </div>
-        </sidebar>
+          </div> 
+        </div>
       </div>
     </div>
   )
@@ -43,9 +50,9 @@ export async function getStaticPaths() {
   const posts = await getPosts()
 
   return {
-    paths: posts.map(({node: {slug}} ) => ({params: {slug}})),
+    paths: posts.map(({ node: {slug}} ) => ({params: {slug}})),
 
     // ? Error: The `fallback` key must be returned from getStaticPaths in /post/[slug]. Expected: { paths: [], fallback: boolean }
-    fallback: false,
+    fallback: true,
   }
 }

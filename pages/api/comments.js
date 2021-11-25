@@ -12,7 +12,14 @@ const graphcmsToken = process.env.GRAPHCMS_TOKEN;
 
 
 export default async function comments(req, res) {
+  
+  //   name: req.body.name,
+  //   email: req.body.email,
+  //   comment: req.body.comment,
+  //   slug: req.body.slug,
+
   const {name, email, slug, comment} = req.body;
+
 
   // console.log('graphcmsToke', {graphcmsToken})
   
