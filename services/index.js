@@ -1,4 +1,5 @@
 import {request, gql } from 'graphql-request';
+
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT;
 
 export const getPosts = async() => {
@@ -30,16 +31,17 @@ export const getPosts = async() => {
         }
       }
     }
-  `
+  `;
+
   const result = await request(graphqlAPI, query);
 
   return result.postsConnection.edges;
-}
+};
 
 export const getRecentPosts = async() => {
   const query = gql`
     query GetPostDetails() {
-      posts (
+      posts(
         orderBy: createdAt_ASC
         last: 3
       ) {
@@ -59,7 +61,7 @@ export const getRecentPosts = async() => {
 
 export const getSimilarPosts = async (categories, slug) => {
   const query = gql`
-    query GetPostDetails($slug: String!, $categories: [Strings!]) {
+    query GetPostDetails($slug: String!, $categories: [String!]) {
       posts (
         where: {slug_not: $slug, AND: {categories_some: {slug_in: $categories}}}
         last: 3
@@ -72,7 +74,8 @@ export const getSimilarPosts = async (categories, slug) => {
         slug
       }
     }
-  `
+  `;
+
   const result = await request(graphqlAPI, query, {slug, categories});
 
   return result.posts;
@@ -86,7 +89,8 @@ export const getCategories = async() => {
         slug
       }
     }
-  `
+  `;
+
   const result = await request(graphqlAPI, query);
 
   return result.categories;
@@ -101,7 +105,7 @@ export const getPostDetails = async (slug) => {
         featuredImage {
           url
         }
-        author{
+        author {
           name
           bio
           photo {
@@ -120,6 +124,7 @@ export const getPostDetails = async (slug) => {
       }
     }
   `;
+
   const result = await request(graphqlAPI, query, {slug});
 
   return result.post;
@@ -133,7 +138,7 @@ export const submitComment = async(obj) => {
   })
 
   return result.json()
-}
+};
 
 export const getComments = async(slug) => {
   const query = gql`
@@ -144,7 +149,8 @@ export const getComments = async(slug) => {
         comment
       }
     }
-  `
+  `;
+
   const result = await request(graphqlAPI, query, { slug });
 
   return result.comments;

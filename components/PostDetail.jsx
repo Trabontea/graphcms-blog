@@ -15,7 +15,7 @@ const PostDetail = ({ post }) => {
         modifiedText = (<em key={index}>{text}</em>);
       }
 
-      console.log('obj', obj)
+      // console.log('obj', obj)
 
       if (obj.href) {
         modifiedText = (<a className="hover:text-red-700" key={index} href={obj.href}>{obj.title}</a>);
@@ -55,7 +55,7 @@ const PostDetail = ({ post }) => {
         <img 
           src={post.featuredImage.url} 
           alt={post.title} 
-          className="object-top h-full w-full"
+          className="object-top h-full w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
         />
       </div>
       <div className="px-4 lg:px-0">
@@ -78,7 +78,7 @@ const PostDetail = ({ post }) => {
             </div>
           </div>
           <h1 className="mb-8 text-3xl font-semibold">{post.title}</h1>
-          {console.log(post.content.raw.children)}
+          {/* {console.log(post.content.raw.children)} */}
             {post.content.raw.children.map((typeObj, index) => {
               const children =  typeObj.children.map((item, itemindex) => getContentFragment(itemindex, item.text, item));
               return getContentFragment(index, children, typeObj, typeObj.type)
@@ -89,4 +89,4 @@ const PostDetail = ({ post }) => {
   )
 }
 
-export default PostDetail
+export default PostDetail;
